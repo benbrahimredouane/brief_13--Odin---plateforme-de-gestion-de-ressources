@@ -64,10 +64,22 @@ To run this project locally:
 
 ```bash
 git clone https://github.com/your-username/LaraBookmarks.git
+```
+```bash
 cd LaraBookmarks
+```
+```bash
 composer install
+```
+```bash
 cp .env.example .env
+```
+```bash
 php artisan key:generate
+```
+```bash
 php artisan migrate
+```
+```bash
 php artisan serve
 ```
