@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+        $middleware->alias(['active' => \App\Http\Middleware\CheckstatusUser::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
