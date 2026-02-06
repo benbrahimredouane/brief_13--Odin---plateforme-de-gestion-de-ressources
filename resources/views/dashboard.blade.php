@@ -17,11 +17,18 @@
     <nav class="navbar navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">
-                My App
+                Odin
             </a>
             <div class="d-flex gap-2">
-                <a href="/" class="btn btn-outline-dark">
-                    Home
+                <a href="/dashboard" class="btn btn-primary">dashboard</a>
+                <a href="{{route('categories.index')}}" class="btn btn-outline-dark">
+                    categories
+                </a>
+                <a href="/links" class="btn btn-outline-dark">
+                    links
+                </a>
+                <a href="/tags" class="btn btn-outline-dark">
+                    tags
                 </a>
                 <form method="POST" action="/logout">
                     @csrf
@@ -40,9 +47,9 @@
             You're logged in!
         </div>
 
-        <p class="text-muted">
-            This is a simple dashboard page.
-            You can add your content later.
+        <p class="text-muted text-centre">
+            welcome to odin landmarkbook a platform that allow you to structure your links by categoryes and tags a beutiful experince are waiting for you just go a head trust me broda .
+            have a good linky day .
         </p>
 
     </div>
