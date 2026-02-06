@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -12,6 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = category::all();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -20,6 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('categories.create');
     }
 
     /**
@@ -28,6 +32,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->validate([
+            'name' => 'required||string',
+        ]);
+
+        category::create($data);
+
+        return redirect()->route('categories.index')->with('secces', 'category created succefuly!');
     }
 
     /**
@@ -44,6 +55,8 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         //
+        $category = category::find($id);
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -52,6 +65,14 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = $request->validate([
+            'name' => 'required||string',
+        ]);
+        
+        $category = category::findOrFail($id);
+        $category->update($data);
+
+        return redirect()->route('categories.index')->with('seccus', 'updated seccusffuly!');
     }
 
     /**
@@ -60,5 +81,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         //
+        category::find($id)->delete();
+        return redirect()->route('categories.index')->with('secess', 'category deleted!');
     }
 }
