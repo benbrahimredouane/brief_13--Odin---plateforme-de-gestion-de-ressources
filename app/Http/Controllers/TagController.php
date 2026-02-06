@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\tag;
 
 class TagController extends Controller
 {
@@ -12,6 +13,8 @@ class TagController extends Controller
     public function index()
     {
         //
+        $tags=tag::all();
+         return view('tags.index',compact('tags'));
     }
 
     /**
@@ -20,6 +23,8 @@ class TagController extends Controller
     public function create()
     {
         //
+        return view('tags.create');
+        
     }
 
     /**
@@ -28,6 +33,12 @@ class TagController extends Controller
     public function store(Request $request)
     {
         //
+        $submit = $request->validate([
+            'name' => 'required||string',
+        ]);
+
+        tag::create($submit);
+        return redirect()->route('tags.index')->with('suess','created succesfully!');
     }
 
     /**
@@ -44,6 +55,8 @@ class TagController extends Controller
     public function edit(string $id)
     {
         //
+        $tag = tag::find($id);
+        return view('tags.edit',compact('tag'));
     }
 
     /**
@@ -52,6 +65,14 @@ class TagController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $submit = $request->validate(['name'=>'required||string']);
+
+
+        $tag = tag::findOrFail($id);
+
+        $tag->update($submit);
+        return redirect()->route('tags.index')->with('secuss','updated succefly!');
+
     }
 
     /**
@@ -60,5 +81,7 @@ class TagController extends Controller
     public function destroy(string $id)
     {
         //
+        tag::find($id)->delete();
+        return redirect()->route('tags.index')->with('secssus','deleted sucessufuly!');
     }
 }
