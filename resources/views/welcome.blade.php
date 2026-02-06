@@ -14,7 +14,7 @@
 
     <div class="container text-center mt-5">
 
-        <h1 class="fw-bold">Welcome Page</h1>
+        <h1 class="fw-bold">Welcome Visiteur</h1>
 
         <p class="text-muted">
             Welcome to Odin a platform that help you structure your links by categorys and tags.
@@ -30,9 +30,6 @@
                 Register
             </a>
 
-            <a href="/dashboard" class="btn btn-dark">
-                Dashboard
-            </a>
         </div>
 
     </div>
