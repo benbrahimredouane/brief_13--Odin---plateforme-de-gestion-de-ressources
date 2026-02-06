@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\link;
 
 class LinkController extends Controller
 {
@@ -12,6 +13,8 @@ class LinkController extends Controller
     public function index()
     {
         //
+        $links = link::all();
+         return view('links.index',compact('links'));
     }
 
     /**
