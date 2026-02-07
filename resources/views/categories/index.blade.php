@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Groups</title>
-    <!-- Bootstrap CDN for quick styling (optional but helpful) -->
+    <!-- bootstrap link cdn for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -42,7 +42,7 @@
     <a href="/dashboard" class="btn btn-primary mb-3">Back to dashboard</a>
 
     @if ($categories->isEmpty())
-    <p>No categories yet.</p>
+    <p class="alert alert-info text-center">No categories yet.</p>
     @else
     <table class="table table-bordered">
         <thead>
@@ -63,7 +63,7 @@
                     <form action=" {{route('categories.destroy', $categorie->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure!')">delete</button>
 
                     </form>
                 </td>
