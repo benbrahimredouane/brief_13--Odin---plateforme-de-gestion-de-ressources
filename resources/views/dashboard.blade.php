@@ -49,7 +49,7 @@
 
         <p class="text-muted text-centre">
             welcome to odin landmarkbook a platform that allow you to structure your links by categoryes and tags a beutiful experince are waiting for you just go a head trust me broda .
-            have a good linky day .
+            have a good linky day.
         </p>
 
     </div>
