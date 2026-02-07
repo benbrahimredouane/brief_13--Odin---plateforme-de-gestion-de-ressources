@@ -10,7 +10,7 @@
         <!-- Navbar -->
     <nav class="navbar navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/">
+            <a class="navbar-brand fw-bold" href="/dashboard">
                 Odin
             </a>
             <div class="d-flex gap-2">
