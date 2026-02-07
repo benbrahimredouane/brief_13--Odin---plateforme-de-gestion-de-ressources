@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\link;
+use App\Models\category;
 
 class LinkController extends Controller
 {
@@ -14,7 +15,7 @@ class LinkController extends Controller
     {
         //
         $links = link::all();
-         return view('links.index',compact('links'));
+        return view('links.index', compact('links'));
     }
 
     /**
@@ -23,6 +24,8 @@ class LinkController extends Controller
     public function create()
     {
         //
+        $categories = category::all();
+        return view('links.create', compact('categories'));
     }
 
     /**
@@ -31,6 +34,16 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->validate([
+            'name' => 'required|string',
+            'url' => 'required|url',
+            'category_id' =>'nullable|exists:categories,id',
+
+        ]);
+
+        link::create($data);
+
+        return redirect()->route('links.index')->with('succes', 'added with succes!');
     }
 
     /**
@@ -47,6 +60,8 @@ class LinkController extends Controller
     public function edit(string $id)
     {
         //
+        $link = link::find($id);
+        return view('links.edit', compact('link'));
     }
 
     /**
@@ -55,6 +70,15 @@ class LinkController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = $request->validate([
+            'name' => 'required|string',
+            'url' => 'required|url',
+        ]);
+
+        $link = link::find($id);
+        $link->update($data);
+
+        return redirect()->route('links.index')->with('sueccs', 'updated succesufly!');
     }
 
     /**
@@ -63,5 +87,9 @@ class LinkController extends Controller
     public function destroy(string $id)
     {
         //
+        link::find($id)->delete();
+        
+
+        return redirect()->route('links.index')->with('secces','delted with succes!');
     }
 }
