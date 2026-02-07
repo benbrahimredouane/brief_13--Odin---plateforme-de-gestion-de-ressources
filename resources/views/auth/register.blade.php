@@ -19,6 +19,9 @@
     <div class="card shadow-sm">
         <div class="card-body p-4">
 
+        @if($errors->any())
+            <p class="alert alert-danger text-center">{{$errors->first()}}</p>
+         @endif
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
