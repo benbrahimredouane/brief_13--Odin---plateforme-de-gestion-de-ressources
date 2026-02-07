@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit link</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+        <!-- Navbar -->
+    <nav class="navbar navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                Odin
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/dashboard" class="btn btn-primary">dashboard</a>
+                <a href="{{route('categories.index')}}" class="btn btn-outline-dark">
+                    categories
+                </a>
+                <a href="/links" class="btn btn-outline-dark">
+                    links
+                </a>
+                <a href="/tags" class="btn btn-outline-dark">
+                    tags
+                </a>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Edit link</h1>
+
+    <form method="POST" action="{{ route('links.update',$link->id) }}" class="mt-4">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label for="name" class="form-label">link Name:</label>
+            <input 
+                type="text" 
+                name="name" 
+                id="name" 
+                class="form-control" 
+                required
+                value="{{ old('name',$link->name) }}"
+            >
+        </div>
+
+          <div class="mb-3">
+            <label for="url" class="form-label">URL:</label>
+            <input 
+                type="url" 
+                name="url" 
+                id="url" 
+                class="form-control" 
+                required
+                value="{{ old('url',$link->url) }}"
+            >
+        </div>
+
+        
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{{ route('links.index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+
+</body>
+</html>
