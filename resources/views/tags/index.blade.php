@@ -42,7 +42,7 @@
     <a href="/dashboard" class="btn btn-primary mb-3">Back to dashboard</a>
 
     @if ($tags->isEmpty())
-    <p>No Tags yet.</p>
+    <p class="alert alert-info text-center">No Tags yet.</p>
     @else
     <table class="table table-bordered">
         <thead>
@@ -63,7 +63,7 @@
                     <form action="{{route('tags.destroy',$tag->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure!')">delete</button>
 
                     </form>
                 </td>
