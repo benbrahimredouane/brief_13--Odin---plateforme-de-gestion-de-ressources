@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
+            $table->foreignId('category_id')->nullable()->onDelete('set null');
             $table->timestamps();
         });
     }
