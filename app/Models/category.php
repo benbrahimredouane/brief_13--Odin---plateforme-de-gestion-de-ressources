@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class category extends Model
 {
@@ -11,4 +12,7 @@ class category extends Model
         'name',
         
     ];
+    public function links(){
+       return $this->hasMany(link::class);
+    }
 }
