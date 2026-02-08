@@ -43,7 +43,7 @@ class LinkController extends Controller
 
         link::create($data);
 
-        return redirect()->route('links.index')->with('succes', 'added with succes!');
+        return redirect()->route('links.index')->with('succss', 'added with succes!');
     }
 
     /**
@@ -61,7 +61,8 @@ class LinkController extends Controller
     {
         //
         $link = link::find($id);
-        return view('links.edit', compact('link'));
+        $categories = category::all();
+        return view('links.edit', compact('link','categories'));
     }
 
     /**
@@ -72,13 +73,15 @@ class LinkController extends Controller
         //
         $data = $request->validate([
             'name' => 'required|string',
-            'url' => 'required|url',
+            'url' => 'required|url',  
+            'category_id' =>'nullable|exists:categories,id',
+
         ]);
 
         $link = link::find($id);
         $link->update($data);
 
-        return redirect()->route('links.index')->with('sueccs', 'updated succesufly!');
+        return redirect()->route('links.index')->with('succss', 'updated succesufly!');
     }
 
     /**
@@ -90,6 +93,6 @@ class LinkController extends Controller
         link::find($id)->delete();
         
 
-        return redirect()->route('links.index')->with('secces','delted with succes!');
+        return redirect()->route('links.index')->with('succss','delted with succss!');
     }
 }
