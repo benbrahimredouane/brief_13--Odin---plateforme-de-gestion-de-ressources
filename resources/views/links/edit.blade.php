@@ -37,6 +37,12 @@
     <form method="POST" action="{{ route('links.update',$link->id) }}" class="mt-4">
         @csrf
         @method('PUT')
+        @if($errors->any())
+                <div class="alert alert-danger">
+                      <p>{{$errors->first()}}</p>
+
+                </div>
+               @endif
 
         <div class="mb-3">
             <label for="name" class="form-label">link Name:</label>
@@ -60,6 +66,16 @@
                 required
                 value="{{ old('url',$link->url) }}"
             >
+        </div>
+
+         <div class="mb-3">
+             <label for="category_id" class="form-label">catygory(optionnel)</label>
+            <select name="category_id" id="category" class="form-select">
+                <option value="" selected>--no category--</option>
+                @foreach($categories as $cat )
+                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                @endforeach
+            </select>
         </div>
 
         
