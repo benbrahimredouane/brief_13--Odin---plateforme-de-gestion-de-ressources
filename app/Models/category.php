@@ -13,6 +13,6 @@ class category extends Model
         
     ];
     public function links(){
-       return $this->hasMany(link::class);
+       return $this->HasMany(link::class);
     }
 }
