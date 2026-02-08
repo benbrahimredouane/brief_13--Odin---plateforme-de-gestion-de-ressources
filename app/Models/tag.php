@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class tag extends Model
 {
@@ -10,4 +11,8 @@ class tag extends Model
     protected $fillable=[
         'name',
     ];
+
+    public function links(){
+        return $this->BelongsToMany(link::class);
+    }
 }
