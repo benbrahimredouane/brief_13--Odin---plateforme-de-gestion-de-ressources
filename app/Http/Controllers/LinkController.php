@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\link;
+use App\Models\Link;
 use App\Models\category;
+use App\Models\Tag;
 
 class LinkController extends Controller
 {
@@ -14,7 +15,9 @@ class LinkController extends Controller
     public function index()
     {
         //
-        $links = link::all();
+       
+        $links = Link::with(['category','tags'])->get();
+        
         return view('links.index', compact('links'));
     }
 
@@ -24,8 +27,9 @@ class LinkController extends Controller
     public function create()
     {
         //
+        $tags = Tag::all();
         $categories = category::all();
-        return view('links.create', compact('categories'));
+        return view('links.create', compact('categories','tags'));
     }
 
     /**
@@ -38,12 +42,18 @@ class LinkController extends Controller
             'name' => 'required|string',
             'url' => 'required|url',
             'category_id' =>'nullable|exists:categories,id',
+            'tags'=> 'array',
+            'tags.*' => 'exists:tags,id',
 
         ]);
 
-        link::create($data);
+        $link=Link::create($data);
 
-        return redirect()->route('links.index')->with('succss', 'added with succes!');
+        $link->tags()->sync($data['tags']??[]);
+
+        
+
+        return redirect()->route('links.index')->with('succss', 'added with succss!');
     }
 
     /**
@@ -60,9 +70,10 @@ class LinkController extends Controller
     public function edit(string $id)
     {
         //
-        $link = link::find($id);
+        $link = Link::find($id);
         $categories = category::all();
-        return view('links.edit', compact('link','categories'));
+        $tags=Tag::all();
+        return view('links.edit', compact('link','categories','tags'));
     }
 
     /**
@@ -75,13 +86,18 @@ class LinkController extends Controller
             'name' => 'required|string',
             'url' => 'required|url',  
             'category_id' =>'nullable|exists:categories,id',
+            'tags'=>'nullable|array',
+            'tags.*'=>'exists:tags,id',
 
         ]);
 
-        $link = link::find($id);
+        $link = Link::findOrFail($id);
         $link->update($data);
+        
 
-        return redirect()->route('links.index')->with('succss', 'updated succesufly!');
+        $link->tags()->sync($data['tags']??[]);
+
+        return redirect()->route('links.index')->with('succss', 'updated succssufly!');
     }
 
     /**
@@ -90,7 +106,7 @@ class LinkController extends Controller
     public function destroy(string $id)
     {
         //
-        link::find($id)->delete();
+        Link::find($id)->delete();
         
 
         return redirect()->route('links.index')->with('succss','delted with succss!');
