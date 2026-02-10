@@ -67,13 +67,23 @@
         </div>
 
         <div class="mb-3">
-             <label for="category_id" class="form-label">catygory(optionnel)</label>
+             <label for="category_id" class="form-label">catygory</label>
             <select name="category_id" id="category" class="form-select">
                 <option value="" selected>--no category--</option>
                 @foreach($categories as $cat )
                 <option value="{{$cat->id}}">{{$cat->name}}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="tag">tags(optionnel)</label>
+            @foreach($tags as $tag)
+            <label for="tag_id">
+            <input type="checkbox" name="tags[]" class="form-checkbox" value="{{$tag->id}}">{{$tag->name}}
+            </label>
+            @endforeach
+
         </div>
 
         
