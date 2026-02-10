@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\tag;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -13,7 +13,7 @@ class TagController extends Controller
     public function index()
     {
         //
-        $tags=tag::all();
+        $tags=Tag::all();
          return view('tags.index',compact('tags'));
     }
 
@@ -37,7 +37,7 @@ class TagController extends Controller
             'name' => 'required||string',
         ]);
 
-        tag::create($submit);
+        Tag::create($submit);
         return redirect()->route('tags.index')->with('suess','created succesfully!');
     }
 
@@ -55,7 +55,7 @@ class TagController extends Controller
     public function edit(string $id)
     {
         //
-        $tag = tag::find($id);
+        $tag = Tag::find($id);
         return view('tags.edit',compact('tag'));
     }
 
@@ -68,7 +68,7 @@ class TagController extends Controller
         $submit = $request->validate(['name'=>'required||string']);
 
 
-        $tag = tag::findOrFail($id);
+        $tag = Tag::findOrFail($id);
 
         $tag->update($submit);
         return redirect()->route('tags.index')->with('secuss','updated succefly!');
@@ -81,7 +81,7 @@ class TagController extends Controller
     public function destroy(string $id)
     {
         //
-        tag::find($id)->delete();
+        Tag::find($id)->delete();
         return redirect()->route('tags.index')->with('secssus','deleted sucessufuly!');
     }
 }
