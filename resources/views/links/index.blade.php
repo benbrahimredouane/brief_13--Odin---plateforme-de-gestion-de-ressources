@@ -53,6 +53,16 @@
                             
                             <small class="text-muted fw-bold">URL:</small>
                             <a href="{{$link->url}}" class="text-break small mb-3 text-truncate d-block">{{$link->url}}</a>
+
+                            <small class="text-muted fw-bold">category:</small>
+                            <h6 class="text-truncate"> {{$link->category->name ?? 'no category'}}</h6>
+
+                            <small class="text-muted">tags:</small>
+                            <div class="container">
+                                @foreach($link->tags as $tag)
+                                <span>{{$tag->name}}</span>
+                                @endforeach
+                            </div>
                             
                             <div class="mt-auto d-flex gap-2 border-top pt-2">
                                 <a href="{{route('links.edit',$link->id)}}" class="btn btn-sm btn-outline-primary flex-grow-1">Edit</a>
