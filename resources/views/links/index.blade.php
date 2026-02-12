@@ -37,7 +37,9 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 fw-bold">Links</h1>
+            @can('create', App\models\Link::class)
             <a href="{{route('links.create')}}" class="btn btn-primary">Add New URL</a>
+            @endcan
         </div>
 
         @if($links->isEmpty())
@@ -65,12 +67,16 @@
                             </div>
                             
                             <div class="mt-auto d-flex gap-2 border-top pt-2">
+                                @can('edit',$link)
                                 <a href="{{route('links.edit',$link->id)}}" class="btn btn-sm btn-outline-primary flex-grow-1">Edit</a>
+                                @endcan
+                                @can('delete',$link)
                                 <form action="{{route('links.destroy',$link->id)}}" method="post" class="flex-grow-1">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger w-100" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
+                                @endcan
                             </div>
                         </div>
                     </div>
