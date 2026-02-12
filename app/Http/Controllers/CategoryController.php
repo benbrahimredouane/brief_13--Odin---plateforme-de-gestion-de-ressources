@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controller;
 
-use App\Models\category;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = category::all();
+        $categories = Category::all();
         return view('categories.index', compact('categories'));
     }
 
@@ -36,6 +38,7 @@ class CategoryController extends Controller
             'name' => 'required||string',
         ]);
 
+        $data['user_id']=Auth::id();
         category::create($data);
 
         return redirect()->route('categories.index')->with('secces', 'category created succefuly!');
@@ -55,7 +58,7 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         //
-        $category = category::find($id);
+        $category = Category::find($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -68,8 +71,9 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name' => 'required||string',
         ]);
+        // $data['user_id']=Auth::id();
         
-        $category = category::findOrFail($id);
+        $category = Category::findOrFail($id);
         $category->update($data);
 
         return redirect()->route('categories.index')->with('seccus', 'updated seccusffuly!');
@@ -81,7 +85,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         //
-        category::find($id)->delete();
+        Category::find($id)->delete();
         return redirect()->route('categories.index')->with('secess', 'category deleted!');
     }
 }
