@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -36,6 +38,7 @@ class TagController extends Controller
         $submit = $request->validate([
             'name' => 'required||string',
         ]);
+        $submit['user_id'] = Auth::id(); 
 
         Tag::create($submit);
         return redirect()->route('tags.index')->with('suess','created succesfully!');
@@ -67,7 +70,7 @@ class TagController extends Controller
         //
         $submit = $request->validate(['name'=>'required||string']);
 
-
+        // $submit['user_id']=Auth::id();
         $tag = Tag::findOrFail($id);
 
         $tag->update($submit);
