@@ -39,7 +39,7 @@ class CategoryController extends Controller
         ]);
 
         $data['user_id']=Auth::id();
-        category::create($data);
+        Category::create($data);
 
         return redirect()->route('categories.index')->with('secces', 'category created succefuly!');
     }
