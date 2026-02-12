@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLinkRequest;
+use App\Models\Category;
 use App\Models\Link;
-use App\Models\category;
+// use Illuminate\Container\Attributes\Auth;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+
+
 
 class LinkController extends Controller
 {
@@ -15,7 +21,8 @@ class LinkController extends Controller
     public function index()
     {
         //
-       
+        $this->authorize('viewAny',Link::class);
+
         $links = Link::with(['category','tags'])->get();
         
         return view('links.index', compact('links'));
@@ -27,8 +34,9 @@ class LinkController extends Controller
     public function create()
     {
         //
+        $this->authorize('create',Link::class);
         $tags = Tag::all();
-        $categories = category::all();
+        $categories = Category::all();
         return view('links.create', compact('categories','tags'));
     }
 
@@ -38,14 +46,17 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('create',Link::class);
         $data = $request->validate([
             'name' => 'required|string',
             'url' => 'required|url',
             'category_id' =>'nullable|exists:categories,id',
             'tags'=> 'array',
             'tags.*' => 'exists:tags,id',
+           
 
         ]);
+        $data['user_id'] = Auth::id();
 
         $link=Link::create($data);
 
@@ -53,7 +64,7 @@ class LinkController extends Controller
 
         
 
-        return redirect()->route('links.index')->with('succss', 'added with succss!');
+        return redirect()->route('links.index')->with('succss', 'added with succssfully!');
     }
 
     /**
@@ -70,8 +81,10 @@ class LinkController extends Controller
     public function edit(string $id)
     {
         //
-        $link = Link::find($id);
-        $categories = category::all();
+        $link = Link::findOrFail($id);
+        $this->authorize('update',$link);
+        
+        $categories = Category::all();
         $tags=Tag::all();
         return view('links.edit', compact('link','categories','tags'));
     }
@@ -82,6 +95,8 @@ class LinkController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $link = Link::findOrFail($id);
+        $this->authorize('update',$link);
         $data = $request->validate([
             'name' => 'required|string',
             'url' => 'required|url',  
@@ -91,7 +106,8 @@ class LinkController extends Controller
 
         ]);
 
-        $link = Link::findOrFail($id);
+        // $data['user_id']=Auth::id();
+        
         $link->update($data);
         
 
@@ -106,7 +122,10 @@ class LinkController extends Controller
     public function destroy(string $id)
     {
         //
-        Link::find($id)->delete();
+        $link=Link::findOrFail($id);
+        $this->authorize('delete',$link);
+        
+        $link->delete();
         
 
         return redirect()->route('links.index')->with('succss','delted with succss!');
